@@ -5,11 +5,19 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
+@Entity
 @Data    // Activates setters and getters
 @ToString(exclude = {"password"})
 @NoArgsConstructor
 @EqualsAndHashCode(of={"username", "email" })
 public class User {
+
+   @GeneratedValue(strategy = GenerationType.AUTO)
+   private Long id;
 
    private String username;
    private String password;
