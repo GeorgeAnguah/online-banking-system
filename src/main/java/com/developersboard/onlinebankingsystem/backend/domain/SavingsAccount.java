@@ -5,10 +5,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data    // Generate setters and getters
@@ -23,5 +22,8 @@ public class SavingsAccount {
 
     private String accountNumber;
     private double balance;
+
+    @OneToMany(mappedBy = "savingsAccount", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<SavingsTransaction> savingsTransactions = new HashSet<>();
 
 }

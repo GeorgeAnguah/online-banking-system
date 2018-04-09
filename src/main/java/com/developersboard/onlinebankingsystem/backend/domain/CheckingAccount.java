@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -21,4 +23,6 @@ public class CheckingAccount {
     private String accountNumber;
     private double balance;
 
+    @OneToMany(mappedBy = "checkingAccount", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<CheckingTransaction> checkingTransactions = new HashSet<>();
 }
