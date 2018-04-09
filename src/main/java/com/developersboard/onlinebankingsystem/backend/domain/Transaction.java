@@ -13,7 +13,7 @@ import javax.persistence.MappedSuperclass;
 @Data
 @NoArgsConstructor
 @ToString
-@EqualsAndHashCode(of={"transactionId","date","amount"})
+@EqualsAndHashCode(of = {"transactionId", "date", "amount"})
 @MappedSuperclass
 class Transaction {
 

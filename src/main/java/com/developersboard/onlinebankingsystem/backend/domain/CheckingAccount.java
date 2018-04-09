@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,14 +14,17 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @ToString(exclude = {"id"})
-@EqualsAndHashCode(of={"accountNumber"})
-public class CheckingAccount {
+@EqualsAndHashCode(of = {"accountNumber"})
+public class CheckingAccount implements Serializable {
+
+    private static final long serialVersionUID = -4452397797538826939L;
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column
+
     private String accountNumber;
+
     private double balance;
 
     @OneToMany(mappedBy = "checkingAccount", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
