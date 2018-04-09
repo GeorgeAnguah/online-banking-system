@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
-@ToString(exclude = {"id"})
+@ToString(exclude = {"id","checkingTransaction"})
 @EqualsAndHashCode(of = {"accountNumber"})
 public class CheckingAccount implements Serializable {
 
@@ -23,6 +23,7 @@ public class CheckingAccount implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(unique = true, nullable = false)
     private String accountNumber;
 
     private double balance;
