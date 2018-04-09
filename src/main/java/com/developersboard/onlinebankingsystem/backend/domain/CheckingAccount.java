@@ -6,14 +6,18 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Data
 @NoArgsConstructor
-@ToString(exclude = {"id","checkingTransaction"})
+@ToString(exclude = {"id","checkingTransactions"})
 @EqualsAndHashCode(of = {"accountNumber"})
 public class CheckingAccount implements Serializable {
 
@@ -26,7 +30,8 @@ public class CheckingAccount implements Serializable {
     @Column(unique = true, nullable = false)
     private String accountNumber;
 
-    private double balance;
+    @DecimalMin("0.0")
+    private BigDecimal balance;
 
     @OneToMany(mappedBy = "checkingAccount", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<CheckingTransaction> checkingTransactions = new HashSet<>();
