@@ -4,18 +4,24 @@ package com.developersboard.onlinebankingsystem.enums;
 // indicate that a particular loan we are processing.
 
 public enum LoanType {
-    CAR("car"),
-    STUDY("study"),
-    HOME("home"),
-    PERSONAL("personal");
+    CAR(1, "car"),
+    STUDY(2, "study"),
+    HOME(3, "home"),
+    PERSONAL(4, "personal");
 
+    private final int id;
     private final String name;
 
-    LoanType(String name) {
+    LoanType(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getId() {
+        return id;
     }
 }
