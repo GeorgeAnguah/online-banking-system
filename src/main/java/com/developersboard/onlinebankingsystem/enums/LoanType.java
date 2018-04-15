@@ -24,4 +24,13 @@ public enum LoanType {
     public int getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("LoanType{");
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

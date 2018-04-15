@@ -6,19 +6,26 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.math.BigDecimal;
+// To be use by the User account.
 
 @Data
-@NoArgsConstructor
 @ToString
+@Entity
+@NoArgsConstructor
 @EqualsAndHashCode
-@MappedSuperclass
 public class Loan {
 
-    private Long id;
+    @Id
+    private int id;
+    private String name;
     private double interestRate;
     private BigDecimal amount;
     private String description;
-    private LoanType loanType;
+
+    public Loan(LoanType loanType) {
+        this.id = loanType.getId();
+        this.name = loanType.getName();
+    }
 }
