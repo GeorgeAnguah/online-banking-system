@@ -34,4 +34,9 @@ public class SavingsAccount implements Serializable {
     @OneToMany(mappedBy = "savingsAccount", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<SavingsTransaction> savingsTransactions = new HashSet<>();
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_id", unique = true)
+    private Customer customer;
+
+
 }

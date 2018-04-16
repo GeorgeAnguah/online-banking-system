@@ -8,14 +8,12 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
 @Data    // Activates setters and getters
 @ToString(exclude = {"password"})
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"username", "email"})
+@MappedSuperclass
 public class User implements Serializable {
-
-    private static final long serialVersionUID = -7742076060725830050L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
