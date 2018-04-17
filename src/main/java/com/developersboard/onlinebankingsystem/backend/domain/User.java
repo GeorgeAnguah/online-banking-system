@@ -1,5 +1,6 @@
 package com.developersboard.onlinebankingsystem.backend.domain;
 
+import com.developersboard.onlinebankingsystem.enums.UserType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,9 @@ public class User implements Serializable {
     private Long id;
 
     private String username;
+
     private String password;
+
     private String firstName;
     private String lastName;
     private String address;
@@ -28,5 +31,9 @@ public class User implements Serializable {
     private String phone;
     private String email;
     private String userType;
+
+    public User(UserType userType) {
+        this.userType = userType.getRole();
+    }
 
 }

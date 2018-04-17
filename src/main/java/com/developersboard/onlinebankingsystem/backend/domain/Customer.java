@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -18,8 +19,6 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class Customer extends User implements Serializable {
 
-    private static final long serialVersionUID = -4965892530879293949L;
-
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private CheckingAccount checkingAccount;
 
@@ -27,7 +26,7 @@ public class Customer extends User implements Serializable {
     private SavingsAccount savingsAccount;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<DebitCard> debitCard;
+    private Set<DebitCard> debitCard = new HashSet<>();
 
 
 }
