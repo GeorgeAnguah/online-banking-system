@@ -1,6 +1,6 @@
 package com.developersboard.onlinebankingsystem.backend.domain;
 
-// A Customer refers to individual(user) with an accounts.
+// A Customer refers to individual(user) with an account.
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class Customer extends User implements Serializable {
+public class Customer extends User {
 
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private CheckingAccount checkingAccount;
