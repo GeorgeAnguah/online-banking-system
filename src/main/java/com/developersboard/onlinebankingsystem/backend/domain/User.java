@@ -1,5 +1,6 @@
 package com.developersboard.onlinebankingsystem.backend.domain;
 
+import com.developersboard.onlinebankingsystem.enums.UserType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -8,21 +9,21 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
 @Data    // Activates setters and getters
 @ToString(exclude = {"password"})
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"username", "email"})
+@MappedSuperclass
 public class User implements Serializable {
-
-    private static final long serialVersionUID = -7742076060725830050L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String username;
+
     private String password;
+
     private String firstName;
     private String lastName;
     private String address;
@@ -30,5 +31,9 @@ public class User implements Serializable {
     private String phone;
     private String email;
     private String userType;
+
+    public User(UserType userType) {
+        this.userType = userType.getRole();
+    }
 
 }
