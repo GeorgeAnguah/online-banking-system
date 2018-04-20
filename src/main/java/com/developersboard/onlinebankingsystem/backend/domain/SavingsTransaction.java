@@ -7,6 +7,9 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.io.Serializable;
 
+// This class hold information about all transactions
+// done on the savings Account.
+
 @Data
 @Entity
 @ToString(callSuper = true)
