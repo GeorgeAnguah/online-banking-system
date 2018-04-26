@@ -31,11 +31,12 @@ public class CustomerRepositoryIntegrationTest {
     public void testFindByEmail() {
 
         // setup
+        // Create and save customer record
         Customer aNewCustomer = new Customer();
         aNewCustomer.setEmail("georgeanguah@yahoo.com");
         customerRepository.save(aNewCustomer);
 
-        // Create and save customer record
+        // retrieve customer from db
         Customer foundContact = customerRepository.findByEmail("georgeanguah@yahoo.com");
 
         // Assertion
