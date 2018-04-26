@@ -1,13 +1,13 @@
 package com.developersboard.onlinebankingsystem.backend.repository;
 
 import com.developersboard.onlinebankingsystem.OnlineBankingSystemApplication;
+import com.developersboard.onlinebankingsystem.backend.domain.CheckingAccount;
 import com.developersboard.onlinebankingsystem.backend.domain.Customer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -25,7 +25,22 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class CustomerRepositoryIntegrationTest {
 
     @Autowired
+    private CheckingTransactionRepository checkingTransactionRepository;
+
+    @Autowired
+    private SavingsAccountRepository savingsAccountRepository;
+
+    @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private LoanRepository loanRepository;
+
+
+
+
+    CheckingAccount checkingAccount = new CheckingAccount();
+
 
     @Test
     public void testFindByEmail() {
