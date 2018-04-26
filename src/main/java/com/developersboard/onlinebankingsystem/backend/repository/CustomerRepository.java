@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
-    public void findByEmail(String email);
+    public Customer findByEmail(String email);
 }
