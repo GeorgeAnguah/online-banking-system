@@ -27,7 +27,7 @@ repositories {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-web')
-    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
+    // https://mvnrepository.com/artifact/org.junit.jupiter/
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.2.0'
 
     runtime('com.h2database:h2')
