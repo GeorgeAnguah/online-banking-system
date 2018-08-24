@@ -21,12 +21,12 @@ public class DebitCard implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String cardNumber;
+    private Integer cardNumber;
     private String cvv;
     private String expiredMonth;
-    private String expiredDate;
+    private String expiredYear;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", unique = true)
     private Customer customer;
 

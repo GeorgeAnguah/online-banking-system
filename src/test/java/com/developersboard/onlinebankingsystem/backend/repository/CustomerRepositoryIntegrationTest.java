@@ -2,12 +2,8 @@ package com.developersboard.onlinebankingsystem.backend.repository;
 
 import com.developersboard.onlinebankingsystem.OnlineBankingSystemApplicationTests;
 import com.developersboard.onlinebankingsystem.backend.domain.*;
-import jdk.nashorn.internal.ir.annotations.Ignore;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -107,7 +103,7 @@ public class CustomerRepositoryIntegrationTest extends OnlineBankingSystemApplic
         aNewCustomer = new Customer();
         aNewCustomer.setCheckingAccount(checkingAccount);
         aNewCustomer.setSavingsAccount(savingsAccount);
-        aNewCustomer.getDebitCard().add(debitCard);
+        aNewCustomer.getDebitCards().add(debitCard);
 
         // save Customer to DB
         customerRepository.save(aNewCustomer);
