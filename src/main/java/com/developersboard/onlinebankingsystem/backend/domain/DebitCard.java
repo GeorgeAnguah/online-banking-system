@@ -1,9 +1,6 @@
 package com.developersboard.onlinebankingsystem.backend.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -26,7 +23,7 @@ public class DebitCard implements Serializable {
     private String expiredMonth;
     private String expiredYear;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id", unique = true)
     private Customer customer;
 

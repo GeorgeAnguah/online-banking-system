@@ -28,8 +28,10 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-    // https://mvnrepository.com/artifact/org.junit.jupiter/
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.2.0'
+//    compile('org.springframework.boot:spring-boot-starter-devtools')
+    compile('org.springframework.boot:spring-boot-starter-security')
+    
+//	testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.2.0'
 
     runtime('com.h2database:h2')
 	compileOnly('org.projectlombok:lombok')

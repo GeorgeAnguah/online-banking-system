@@ -17,7 +17,7 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
-@ToString(exclude = {"id","checkingTransactions"})
+@ToString(exclude = {"checkingAcc_id","checkingTransactions"})
 @EqualsAndHashCode(of = {"accountNumber"})
 public class CheckingAccount implements Serializable {
 
@@ -25,7 +25,7 @@ public class CheckingAccount implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long checkingAcc_id;
 
     @Column(unique = true, nullable = false)
     private String accountNumber;
@@ -40,4 +40,7 @@ public class CheckingAccount implements Serializable {
     @JoinColumn(name = "customer_id", unique = true)
     private Customer customer;
 
+    public CheckingAccount(BigDecimal balance) {
+        this.balance = balance;
+    }
 }

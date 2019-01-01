@@ -3,53 +3,64 @@ package com.developersboard.onlinebankingsystem.backend.service.imp;
 import com.developersboard.onlinebankingsystem.backend.domain.*;
 import com.developersboard.onlinebankingsystem.backend.repository.CheckingAccountRepository;
 import com.developersboard.onlinebankingsystem.backend.repository.CustomerRepository;
+import com.developersboard.onlinebankingsystem.backend.repository.DebitCardRepository;
 import com.developersboard.onlinebankingsystem.backend.repository.SavingsAccountRepository;
 import com.developersboard.onlinebankingsystem.backend.service.CustomerService;
+import com.developersboard.onlinebankingsystem.enums.UserType;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.DecimalMin;
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
     private static Integer nextDebitCardNumber = 1000;
-    private static Integer nextCheckingAccountNumber = 12345;
-    private static Integer nextSavingsAccountNumber = 54321;
+    private static Integer nextCheckingAccountNumber = 1223445;
+    private static Integer nextSavingsAccountNumber = 5432145;
 
     private final CheckingAccountRepository checkingAccountRepository;
     private final SavingsAccountRepository savingsAccountRepository;
     private final CustomerRepository customerRepository;
+    private final DebitCardRepository debitCardRepository;
 
-    public CustomerServiceImpl(
-            CheckingAccountRepository checkingAccountRepository, SavingsAccountRepository savingsAccountRepository,
-            CustomerRepository customerRepository) {
+    public CustomerServiceImpl(CheckingAccountRepository checkingAccountRepository, SavingsAccountRepository savingsAccountRepository, CustomerRepository customerRepository, DebitCardRepository debitCardRepository) {
         this.checkingAccountRepository = checkingAccountRepository;
         this.savingsAccountRepository = savingsAccountRepository;
         this.customerRepository = customerRepository;
+        this.debitCardRepository = debitCardRepository;
     }
 
     @Override
     public Customer createCustomer(Customer customer) {
 
-        //TODO: 1. The customer needs checking account
-        CheckingAccount checkingAccount = new CheckingAccount();
+
+        CheckingAccount checkingAccount = new CheckingAccount(new BigDecimal(0.0));
         checkingAccount.setAccountNumber(getNextCheckingAccountNumber().toString());
 
-        // save checkingAccount to database and get back assigned object with id
-        checkingAccount = checkingAccountRepository.save(checkingAccount);
         customer.setCheckingAccount(checkingAccount);
 
-        //TODO: 2. The customer needs savings account
-        SavingsAccount savingsAccount = new SavingsAccount();
-        savingsAccount.setAccountNumber(getNextSavingsAccountNumber().toString());
+        // set customer reference in checkingAccount( reverse mapping)
+       checkingAccount.setCustomer(customer);
 
-        //TODO: 3. The customer needs debit card
+        SavingsAccount savingsAccount = new SavingsAccount(new BigDecimal(0.0));
+        savingsAccount.setAccountNumber(getNextSavingsAccountNumber().toString());
+        customer.setSavingsAccount(savingsAccount); // set customer savingAccount
+
+        // set customer reference in savingsAccount( reverse mapping)
+        savingsAccount.setCustomer(customer);
+
         DebitCard debitCard = new DebitCard();
         debitCard.setCardNumber(getNextDebitCardNumber());
 
         customer.setDebitCards(new HashSet<>(Collections.singletonList(debitCard)));
 
+        // set customer reference in debitCard( reverse mapping)
+        debitCard.setCustomer(customer);
 
+        // set customer type : UserType
+        customer.setType(UserType.CUSTOMER);
 
         return customerRepository.save(customer);
     }
@@ -59,64 +70,98 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public Optional<Customer> getCustomerById(Long id) {
-//        validateInput(id);
+        //TODO: 1        validateInput(id);
         return customerRepository.findById(id);
     }
 
     @Override
     public void deleteCustomerById(Long id) {
-         customerRepository.deleteById(id);
+        //TODO: 1        validateInput(id);
+        customerRepository.deleteById(id);
     }
 
-    @Override
-    public Optional<Customer> saveCustomer(Customer customer) {
 
-        Customer save = customerRepository.save(customer);
-        return Optional.of(save);
+/** */
+    @Override
+    public Iterable<? extends Customer> getAllUser() {
+        return customerRepository.findAll();
     }
 
     // TODO : Refactor Code
 
-    /**
-     *
-     * @return the a list of all the Customers
-     */
-    @Override
-    public List<? extends User> getAllUser() {
 
-        Iterable<Customer> customerIterable = customerRepository.findAll();
-        Iterator<Customer> customerItr = customerIterable.iterator();
-        List<Customer> customerList = new ArrayList<>();
-
-        while(customerItr.hasNext())
-            customerList.add(customerItr.next());
-
-        return customerList;
-    }
 
     /**
-     *
-     * @param user
-     *        The modified user to be saved into DB
-     *
+     * @param user The modified user to be saved into DB
      * @return the saved user(ie customer)
      */
     @Override
-    public User updateUserInfo(User user) {
-        return customerRepository.save((Customer) user);
+    public Customer updateUserInfo(Customer user) {
+        return customerRepository.save(user);
     }
 
+    // Check if customer already exit in repository
+    @Override
+    public boolean customerExist(Customer customer) {
+        if( checkEmailExist(customer.getEmail()) || checkUsernameExist(customer.getUsername())){
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     *
+     * @param email to be verify for duplicate
+     * @return true if email already exit, otherwise false
+     */
+    @Override
+    public boolean checkEmailExist(String email) {
+        Customer customer = customerRepository.findCustomerByEmail(email);
+        if (customer != null) return true;
+        return false;
+    }
+
+
+    /**
+     *
+     * @param username to be verified for duplicate
+     * @return true if email already exit, otherwise false
+     */
+    @Override
+    public boolean checkUsernameExist(String username) {
+        Customer customer = customerRepository.findCustomerByUsername(username);
+        if (customer != null) return true;
+        return false;
+    }
+
+    @Override
+    public Customer getCustomerByUsername(String username) {
+        return customerRepository.findCustomerByUsername(username);
+    }
+
+//    @Override
+//    public boolean withdrawCheckingAccount(CheckingAccount account, double amount) {
+//        BigDecimal bigDecimal = new BigDecimal(amount);
+//        if(account.getBalance().subtract(bigDecimal).compareTo(bigDecimal) < 0   ) {
+//            return false;
+//
+//        }else{
+//            account.getBalance().subtract(bigDecimal); // substract amount from checking account
+//        }
+//        return true;
+//    }
 
 
     private Integer getNextDebitCardNumber() {
-        return ++nextDebitCardNumber;
+        return nextDebitCardNumber++;
     }
 
     private Integer getNextCheckingAccountNumber() {
-        return ++nextCheckingAccountNumber;
+        return nextCheckingAccountNumber++;
     }
 
     private Integer getNextSavingsAccountNumber() {
-        return ++nextSavingsAccountNumber;
+        return nextSavingsAccountNumber++;
     }
 }

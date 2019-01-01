@@ -2,7 +2,8 @@ package com.developersboard.onlinebankingsystem.backend.repository;
 
 import com.developersboard.onlinebankingsystem.OnlineBankingSystemApplicationTests;
 import com.developersboard.onlinebankingsystem.backend.domain.*;
-import org.junit.jupiter.api.*;
+import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
