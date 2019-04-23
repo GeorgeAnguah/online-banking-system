@@ -3,5 +3,6 @@ Spring Boot project
 Technologies:
   JAVA
   Thymleaf
-  Maven
+  Gradle
+  
   
